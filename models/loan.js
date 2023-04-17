@@ -1,37 +1,25 @@
-const Sequelize = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
+const sq = new Sequelize('postgres://postgres:root@localhost:5432/loan');
 
-const LoanApplication = sequelize.define('LoanApplication', {
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-    },
-    name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
+const User = sq.define("user", {
     email: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
-    },
-    amount: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-    },
-    creditscore: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
+        primaryKey: true,
     },
 
-    status: {
-        type: Sequelize.ENUM('pending', 'approved', 'rejected'),
-        defaultValue: 'pending',
+    name: {
+        type: DataTypes.STRING,
     },
-    created_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.literal('NOW()'),
+
+    age: {
+        type: DataTypes.INTEGER,
     },
+
+
+});
+User.sync().then(() => {
+    console.log("User Model synced");
 });
 
-module.exports = LoanApplication;
+module.exports = User;
